@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Web Bluetooth API デバイス捜索</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.css"
+    />
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">捜索機能</h1>
+
+        <div class="buttons" style="margin-top: 1.5rem">
+          <button
+            class="button is-success is-light"
+            type="button"
+            onclick="onStartButtonClick()"
+          >
+            Search
+          </button>
+
+        </div>
+        <div align="center">
+          <p id="output">信号強度</p>
+          <img id="image_place" src="1.jpg">
+
+      </div>
+      </div>
+    </section>
+    
+    <script>
+      var img = document.getElementById("image_place");
+      var ratio = 1;
+      var numOflevel = 4; //信号レベルの分解数
+      let nameSelect = "Leaf_AC02"
+    
+        
+      async function onStartButtonClick() {
+        
+        await navigator.bluetooth
+          .requestLEScan({
+            filters: [{ name: [nameSelect.value] }],
+            keepRepeatedDevices: true,
+          })
+          .then(() => {
+            navigator.bluetooth.addEventListener(
+              "advertisementreceived",
+              (event) => {
+                //console.log(event.rssi);
+                document.getElementById("output").textContent = event.rssi;
+                ratio = (1 - (-30 - event.rssi) / 70) * numOflevel;
+                console.log(ratio);
+                if(ratio >= numOflevel-0.5){
+                  ratio = numOflevel-0.5;
+                }
+                ratio = String(Math.ceil(ratio+0.5));
+                console.log(ratio + '.jpg');
+                img.src = ratio + '.jpg';
+              }
+            );
+          });
+      }
+    </script>
+  </body>
+</html>
