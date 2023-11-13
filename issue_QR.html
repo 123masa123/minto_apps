@@ -1,0 +1,34 @@
+<html>
+	<head>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.js"></script>
+	</head>
+	<body>
+		<div id="qrOutput">
+			<canvas id="qr"></canvas>
+			<div><img id="newImg"></div>			
+		</div>
+		<p>QRコードはデンソーウェーブの登録商標です</p>
+
+		<script>			
+			var query = "https://123masa123.github.io/minto_apps/co-search.html?devicename=Leaf_AC02";
+			// QRコードの生成
+			(function() {
+				var qr = new QRious({
+				element: document.getElementById('qr'),
+				// 入力した文字列でQRコード生成
+				value: query
+			});
+			qr.background = '#FFF'; //背景色
+			qr.backgroundAlpha = 0.8; // 背景の透過率
+			qr.foreground = '#6bb6ff'; //QRコード自体の色
+			qr.foregroundAlpha = 1.0; //QRコード自体の透過率
+			qr.level = 'L'; // QRコードの誤り訂正レベル
+			qr.size = 240; // QRコードのサイズ
+				// QRコードをflexboxで表示
+				document.getElementById('qrOutput').style.display = 'flex';
+			})();		
+			
+		</script>
+		
+	</body>
+      </html>
