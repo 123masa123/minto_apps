@@ -5,16 +5,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Web Bluetooth API デバイス捜索</title>
+    <title>Web Bluetooth API デバイス検知</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.css"
     />
+
   </head>
   <body>
     <section class="section">
       <div class="container">
-        <h1 class="title">捜索機能</h1>
+        <h1 class="title">いなくなった通知機能</h1>
         <p>
           <label for="deviceName">デバイスを選択してください</label>
           <select id="deviceName">
@@ -31,22 +32,26 @@
           >
             Search
           </button>
-
         </div>
         <div align="center">
           <p id="output">信号強度</p>
-          <img id="image_place" src="1.jpg">
-
-      </div>
+          <img id="image_place" >
+          <audio id="check_audio">
+            <source src="check_sound.mp3" type="audio/mp3">
+          </audio>
+          <p id="message"></p>
+          <p id="message2"></p>
+        </div>
       </div>
     </section>
     
     <script>
       var img = document.getElementById("image_place");
-      var ratio = 1;
-      var numOflevel = 4; //信号レベルの分解数
+      var doc0= document.getElementById("message");
+      var doc1= document.getElementById("message");
       let nameSelect = document.getElementById("deviceName");
-    
+      var flg = true;
+
       async function onStartButtonClick() {
         
         await navigator.bluetooth
@@ -58,20 +63,25 @@
             navigator.bluetooth.addEventListener(
               "advertisementreceived",
               (event) => {
-                //console.log(event.rssi);
+                console.log(event.rssi);
                 document.getElementById("output").textContent = event.rssi;
-                ratio = (1 - (-30 - event.rssi) / 70) * numOflevel;
-                console.log(ratio);
-                if(ratio >= numOflevel-0.5){
-                  ratio = 3.5;
-                }
-                ratio = String(Math.ceil(ratio+0.5));
-                console.log(ratio + '.jpg');
-                img.src = ratio + '.jpg';
+                img.src = 'checkmark.jpg';
+                doc0.innerHTML = "ミント君が近くにいます";
+                flg = false;
               }
             );
-          });
+          })
+
+          
+          setInterval(()=>{
+            if(flg){
+                console.log("interval");
+            }
+            flg = true;        
+          }, 1000)
+        
       }
+
     </script>
   </body>
 </html>
