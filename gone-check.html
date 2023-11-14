@@ -36,8 +36,8 @@
         <div align="center">
           <p id="output">信号強度</p>
           <img id="image_place" >
-          <audio id="check_audio">
-            <source src="check_sound.mp3" type="audio/mp3">
+          <audio id="alert_audio">
+            <source src="alert_sound.mp3" type="audio/mp3">
           </audio>
           <p id="message"></p>
           <p id="message2"></p>
@@ -76,6 +76,9 @@
           setInterval(()=>{
             if(flg){
                 console.log("interval");
+                img.src = 'checkmark.jpg';
+                document.getElementById('alert_audio').play();
+                doc0.innerHTML = "ミント君が離れています！";
             }
             flg = true;        
           }, 1000)
