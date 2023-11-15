@@ -38,14 +38,14 @@
       var img = document.getElementById("image_place");
       var ratio = 1;
       var numOflevel = 4; //信号レベルの分解数
-      let nameSelect = "Leaf_AC02"
+      let devicename = "Leaf_AC02"
     
         
       async function onStartButtonClick() {
         
         await navigator.bluetooth
           .requestLEScan({
-            filters: [{ name: [nameSelect.value] }],
+            filters: [{ name: [devicename] }],
             keepRepeatedDevices: true,
           })
           .then(() => {
