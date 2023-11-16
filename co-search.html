@@ -14,7 +14,9 @@
   <body>
     <section class="section">
       <div class="container">
-        <h1 class="title">捜索機能</h1>
+        <h1 class="title">一緒に探す</h1>
+
+        <p><Url class="devicename"></Url></p>
 
         <div class="buttons" style="margin-top: 1.5rem">
           <button
@@ -38,13 +40,16 @@
       var img = document.getElementById("image_place");
       var ratio = 1;
       var numOflevel = 4; //信号レベルの分解数
-      let devicename = "Leaf_AC02";
-
+      let url = new URL(window.location.href);
+      let params = url.searchParams;
+      let nameSelect = params.get('devicename')
+      
+      console.log(params.get('devicename'));
       async function onStartButtonClick() {
         
         await navigator.bluetooth
           .requestLEScan({
-            filters: [{ name: [devicename] }],
+            filters: [{ name: [nameSelect] }],
             keepRepeatedDevices: true,
           })
           .then(() => {
@@ -59,6 +64,7 @@
                   ratio = numOflevel-0.5;
                 }
                 ratio = String(Math.ceil(ratio+0.5));
+                console.log(URL.devicename);
                 console.log(ratio + '.jpg');
                 img.src = ratio + '.jpg';
               }
