@@ -1,8 +1,38 @@
 <html>
 	<head>
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.js"></script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Web Bluetooth API デバイス検知</title>
+		<link
+		  rel="stylesheet"
+		  href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.css"
+		/>
+	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.js"></script>
 	</head>
 	<body>
+		<section class="section">
+			<div class="container">
+			  <h1 class="title">いなくなった通知機能</h1>
+			  <p>
+				<label for="deviceName">デバイスを選択してください</label>
+				<select id="deviceName">
+				<option value="Leaf_AC02">Leaf_AC02</option>
+				<option value="lemon">Lemon</option>
+				<option value="strawberry">Strawberry</option>
+				</select>
+			  </p>
+			  <div class="buttons" style="margin-top: 1.5rem">
+				<button
+				  class="button is-success is-light"
+				  type="button"
+				  onclick="onQRgenerateButtonClick()"
+				>
+				  QR生成
+				</button>
+			  </div>
+			</div>
+		  </section>
 		<div id="qrOutput">
 			<canvas id="qr"></canvas>
 			<div><img id="newImg"></div>			
@@ -10,8 +40,10 @@
 		<p>QRコードはデンソーウェーブの登録商標です</p>
 
 		<script>
-			var query = "https://123masa123.github.io/minto_apps/co-search.html?devicename=Leaf_AC02";
+			let nameSelect = document.getElementById("deviceName").value;
+			var query = `https://123masa123.github.io/minto_apps/co-search.html?devicename=${nameSelect}`;
 			// QRコードの生成
+			function onQRgenerateButtonClick(){
 			(function() {
 				var qr = new QRious({
 				element: document.getElementById('qr'),
@@ -27,6 +59,7 @@
 				// QRコードをflexboxで表示
 				document.getElementById('qrOutput').style.display = 'flex';
 			})();		
+		}
 			
 		</script>
 		
